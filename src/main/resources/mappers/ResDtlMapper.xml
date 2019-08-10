@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ResDtlMapper">
+    <!--查询预约明细-->
+    <select id="getResDtl" parameterType="com.example.demo.entity.Condition" resultType="com.example.demo.entity.ResUser">
+          select CreatedOn,name,Age,sex,Phone,CombinItemName,CombinItemCode,
+          if(Status=0,'未到','已到') as Status,BarCode,ID,ResDate,Description
+          from res_checkin
+          where name =ifnull(#{name},name )
+          and phone =ifnull(#{phone},phone )
+          and ID =ifnull(#{ID},ID )
+          and ResDate between #{dateS} and  #{dateE};
+
+    </select>
+    <!--查询当天预约人数-->
+    <select id="getDtlCount" parameterType="com.example.demo.entity.Condition" resultType="com.example.demo.entity.ResUser">
+          select CreatedOn,count(CreatedOn) as account
+          from res_checkin
+          where name =ifnull(#{name},name )
+          and BarCode =ifnull(#{barCode},BarCode )
+          and Identity =ifnull(#{identity},Identity )
+          and CreatedOn between #{dateS} and  #{dateE}
+          group by CreatedOn
+          ;
+
+    </select>
+    <!--增加预约-->
+    <insert id="addRes" parameterType="com.example.demo.entity.ResUser">
+        insert into res_checkIn
+          (barCode,identity,name,age,sex,province,city,
+          area,addr,Email,createdBy,createdOn,status,
+          combinItemCode,combinItemName,phone,BornDate,
+          Nation,IsMarry,ResDate,Description)
+        values
+          ("",#{identity},#{name},#{age},#{sex},#{province},#{city},
+          #{area},#{addr},#{eMail},#{createdBy},#{createdOn},#{status},
+          #{combinItemCode},#{combinItemName},#{phone},#{bornDate},
+          #{nation},#{isMarry},#{resDate},#{description});
+
+    </insert>
+
+    <!--删除预约-->
+    <delete id="deleteRes" parameterType="Integer">
+        delete from res_checkin
+        where  ID=#{id}
+    </delete>
+
+    <!--修改预约信息-->
+    <update id="updateRes" parameterType="com.example.demo.entity.ResUser">
+        update res_checkin
+        set name = #{name,jdbcType=VARCHAR},
+        age =  #{age,jdbcType=VARCHAR},
+        sex= #{sex,jdbcType=VARCHAR},
+        combinItemName= #{combinItemName,jdbcType=VARCHAR},
+        Phone= #{phone,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        ResDate = #{resDate,jdbcType=VARCHAR},
+        Description = #{description,jdbcType=VARCHAR}
+        where ID=#{ID};
+    </update>
+
+</mapper>

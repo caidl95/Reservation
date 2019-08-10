@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>登陆</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="dialog.js-master/css/dialog.css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+
+    <script src="dialog.js-master/js/zepto.min.js"></script>
+    <script src="dialog.js-master/js/dialog.js"></script>
+    <script src="js/admin.js" ></script>
+    <script src="web/js/cookie.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <form id="form-login" class="form-signin" method="post" role="form">
+        <h2 class="form-signin-heading">请登陆</h2>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="UserName" name="loginname" required autofocus >
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required >
+        <div class="checkbox" style="color: red;"></div>
+        <button id="btn-login" class="btn btn-lg btn-primary btn-block" type="button">登 陆</button>
+    </form>
+</div>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+<script type="text/javascript">
+    $("#btn-login").click(function(){
+        var isNull = true;
+        //获得表单值
+        var username = $("#inputEmail").val();
+        var password = $("#password").val();
+        //如果表单为空，提示用户
+        if (username == "" || password == "" ) {
+            isNull = false;
+            $.dialog({
+                autoClose: 2500,
+                contentHtml: '<p style="text-align:center;">用户名密码或验证码不能为空！</p>'
+            });
+        }
+        if (isNull) {
+            $.ajax({
+                "url":"/users/login",
+                "data":$("#form-login").serialize(),
+                "type":"POST",
+                "dataType":"json",
+                "success":function(json) {
+                    if (json.status == 200) {
+                        setCookie("username", json.data.nickname, "1");
+                        setCookie("role", json.data.role, "1")
+                        location.href="./admin.html";
+                    } else {
+                        $.dialog({
+                            autoClose: 2500,
+                            contentHtml: "<p style=\"text-align:center;\">" + json.msg + "</p>"
+                        });
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

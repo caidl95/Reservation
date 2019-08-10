@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- 标题logo -->
+    <!-- &lt;!&ndash;<link rel="shortcut icon" href="./imgs/logo1.jpg">&ndash;&gt;-->
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link  rel="stylesheet" href="css/appointment.css">
+    <link rel="stylesheet" href="../dialog.js-master/css/dialog.css">
+</head>
+<body>
+
+<div id="placeholder">
+    <div id="box" class="form-group" style="width: 600px;">
+        <form id="form-input">
+            <input id="input-ss"  style="display: inline-block;width: 38%" class="form-control login_password" type="date" name="dateS" placeholder="请按照日期查询名称查询，默认为当前时间">
+            <span> - </span>
+            <input id="input-s"  style="display: inline-block;width: 38%" class="form-control login_password" type="date" name="dateE" placeholder="请按照日期查询名称查询，默认为当前时间">
+
+            <button id="search" style="display: inline-block;width: 15%" class="btn btn-lg btn-primary btn-block" type="button" onclick="condition_search()" ><span id="search-span">查询 </span></button>
+        </form>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div  id='page2' style='border:0px solid green;width:95%;' class="split">
+        <center style='font-size:35px'>预&nbsp;约&nbsp;检&nbsp;查&nbsp;表</center>
+        <p  style="font-size: 20px;"><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< </p>
+
+        <div id="appointment-list"></div>
+
+        <div id="appointment-and-input"></div>
+    </div>
+
+
+</div>
+
+<script src="../dialog.js-master/js/zepto.min.js"></script>
+<script src="../dialog.js-master/js/dialog.js"></script>
+<script type="text/javascript" src="js/appointment01.js" ></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IndexMapper">
+    <select id="getMes" parameterType="String" resultType="com.example.demo.entity.ResUser">
+          select
+            ResDate,
+            count(1) as reserved,
+            count(if(Status=1,true,null)) as arrived,
+            count(if(Status=0,true,null)) as unarrived
+         from res_checkin
+         group by ResDate
+
+    </select>
+
+
+</mapper>
